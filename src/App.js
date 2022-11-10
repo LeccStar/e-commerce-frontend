@@ -1,8 +1,15 @@
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./router/AppRouter";
+import Footer from "./shared/Footer";
+import Navbar from "./shared/Navbar";
+
 function App() {
   return (
-    <div>
-      <h1>ECOMMERCE</h1>
-    </div>
+    <BrowserRouter>
+    <Navbar/>
+    <AppRouter/>
+    <Footer/>
+    </BrowserRouter>
   );
 }
 
