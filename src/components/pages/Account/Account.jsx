@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
-import 'bootstrap/dist/css/bootstrap.css'
-
+import { signupService } from '../../../services/userService'
+import "./Account.css"
 
 const Account = () => {
 
@@ -22,28 +22,43 @@ const Account = () => {
 
   const createUser = async (e) => {
     e.preventDefault()
+
+    try {
+      const resp = await signupService(formulario)
+
+      console.log(resp);
+
+
+    } catch (error) {
+      Swal.fire(
+        "Mensaje",
+        `${error.response.data.errors[0].msg}`,
+        "error"
+      )
+      console.log(error);
+    }
   }
 
   return (
     <main className="form-signin w-100 m-auto">
       <form onSubmit={createUser}>
-        <img className="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt width={72} height={57} />
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <img className="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="img" width={72} height={57} />
+        <h1 className="h3 mb-3 fw-normal">Registrarse</h1>
         <div className="form-floating">
           <input type="text" className="form-control" id="floatingInput" placeholder="Name" value={formulario.name} name="name" onChange={handleInputChange} />
-          <label htmlFor="floatingInput">Name</label>
+          <label htmlFor="floatingInput">Nombre</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" id="floatingInput" placeholder="Last Name" value={formulario.lastName} name="lastName" onChange={handleInputChange} />
-          <label htmlFor="floatingInput">Last Name</label>
+          <label htmlFor="floatingInput">Apellido</label>
         </div>
         <div className="form-floating">
           <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" value={formulario.email} name="email" onChange={handleInputChange} />
-          <label htmlFor="floatingInput">Email address</label>
+          <label htmlFor="floatingInput">Correo</label>
         </div>
         <div className="form-floating">
           <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={formulario.password} name="password" onChange={handleInputChange} />
-          <label htmlFor="floatingPassword">Password</label>
+          <label htmlFor="floatingPassword">Contraseña</label>
         </div>
         <div className="checkbox mb-3">
           <label>

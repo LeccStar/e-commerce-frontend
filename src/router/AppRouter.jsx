@@ -1,13 +1,14 @@
 import {Navigate, Route, Routes} from 'react-router-dom'
-import Login from '../components/Login/Login'
-import { Product } from '../components/Product/Product'
-import Home from '../components/Home/Home'
+import Login from '../components/pages/Login/Login'
+import { Product } from '../components/pages/Product/Product'
+import Home from '../components/pages/Home/Home'
 import NotFound from '../components/NotFound/NotFound'
-import Account from '../components/Account/Account'
+import Account from '../components/pages/Account/Account'
+import UserProvider from '../context/UserProvider'
 
 const AppRouter = () => {
   return (
-    <>
+    <UserProvider>
     <Routes>
         <Route path='home' element={<Home/>}/>
         <Route path='products' element={<Product/>}/>
@@ -16,7 +17,7 @@ const AppRouter = () => {
         <Route path='/' element={<Navigate to="/home"/>}/>
         <Route path='*' element={<NotFound/>}/>
     </Routes>
-    </>
+    </UserProvider>
   )
 }
 

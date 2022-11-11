@@ -1,5 +1,5 @@
 import React from 'react'
-import { types } from '../../types/types'
+import { types } from '../types/types'
 
 const authReducer = (state = {}, action) => {
 
