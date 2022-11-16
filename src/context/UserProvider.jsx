@@ -1,11 +1,9 @@
 import { useState, useCallback } from 'react'
-import {useReducer} from 'react'
 import { verifyTokenService } from '../services/userService'
 //import { types } from '../../types/types'
 import authReducer from './AuthReducer'
 import { UserContext } from './UserContext'
 
-const MY_AUTH_APP = "MY_AUTH_APP"
 
 const initialState = {
   uid: null,
@@ -17,7 +15,7 @@ const UserProvider = ({children}) => {
    // const user = JSON.parse(window.localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE));
 
     //const [user,setUser] = useState(window.localStorage.getItem(MY_AUTH_APP))
-    const [user,setUser] = useState(initialState)
+    const [user,setUser] = useState(null)
 
     const loginContext = (data) => {
       //window.localStorage.setItem(MY_AUTH_APP, user.token)
@@ -31,11 +29,8 @@ const UserProvider = ({children}) => {
     }
 
     const logoutContext = (user) => {
-      window.localStorage.removeItem(MY_AUTH_APP)
-      setUser({
-        name: null,
-        uid: null
-      })
+      window.localStorage.removeItem(process.env.REACT_APP_LOCALSTORAGE)
+      setUser(null)
     }
     const verifyToken = useCallback(async ()=>{
       const token = window.localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE);
@@ -52,7 +47,7 @@ const UserProvider = ({children}) => {
     
 
   return (
-    <UserContext.Provider value={{user,loginContext, logoutContext, verifyToken}}>
+    <UserContext.Provider value={{ user,loginContext, logoutContext, verifyToken}}>
         {children}
     </UserContext.Provider>
     )

@@ -1,10 +1,17 @@
 import React from 'react'
+import { useContext } from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { UserContext } from '../../../context/UserContext'
 import { signupService } from '../../../services/userService'
+import LoadingButton from '../../LoadingButton/LoadingButton'
 import "./Account.css"
 
 const Account = () => {
+
+  const { loginContext } = useContext(UserContext)
+
 
   const [formulario, setFormulario] = useState({
     name: "",
@@ -12,6 +19,10 @@ const Account = () => {
     email: "",
     password: ""
   });
+
+  const navigate = useNavigate()
+  
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (e) => {
     setFormulario({
@@ -25,8 +36,9 @@ const Account = () => {
 
     try {
       const resp = await signupService(formulario)
-
       console.log(resp);
+      loginContext(resp);
+      navigate("/home")
 
 
     } catch (error) {
@@ -65,7 +77,7 @@ const Account = () => {
             <input type="checkbox" defaultValue="remember-me" /> Remember me
           </label>
         </div>
-        <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <LoadingButton isLoading={isLoading} text='Continuar' className="w-100 btn btn-lg btn-primary" type="submit"/>
         <p className="mt-5 mb-3 text-muted">© 2017–2022</p>
       </form>
     </main>
