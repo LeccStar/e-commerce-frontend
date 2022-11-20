@@ -22,11 +22,11 @@ export const signupService = async (data) => {
 }
 
 export const putUserService = async (uid, data)=> {
-    const resp = await axios.put(`${URL_USERS}/${uid}`, data)
+    const resp = await axios.put(`${URL_USERS}/${uid}`, data, ConfigHeader)
     return resp.data
 }
 
 export const verifyTokenService = async()=> {
-    const resp = await axios.get(URL_USERS, ConfigHeader)
+    const resp = await axios.get(`${URL_USERS}`, ConfigHeader)
     return resp.data
 }

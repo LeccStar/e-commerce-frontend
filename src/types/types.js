@@ -6,9 +6,4 @@ export const types = {
     DELETE_PRODUCT_CAR : '[Product] DELETE_PRODUCT',
     EMPTY_CAR : '[Product] EMPTY_CAR'
 
-
-
-
-/*     login: '[Auth] login',
-    logaut: '[Auth] logout' */
 }

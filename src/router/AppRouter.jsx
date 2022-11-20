@@ -8,15 +8,22 @@ import UserProvider from '../context/UserProvider'
 import Navbar from '../shared/Navbar'
 import PrivateRoute from './PrivateRoute'
 import Profile from '../components/pages/Profile/Profile'
+import PublicRoutes from './PublicRoutes'
 
 const AppRouter = () => {
+
+
   return (
     <UserProvider>
       <Navbar/>
     <Routes>
         <Route path='home' element={<Home/>}/>
         <Route path='products' element={<Product/>}/>
-        <Route path='login' element={<Login/>}/>
+        <Route path='login' element={
+        <PublicRoutes>
+          <Login/>
+        </PublicRoutes>
+      }/>
         <Route path='account' element={<Account/>}/>
         <Route path='profile' element={
           <PrivateRoute>

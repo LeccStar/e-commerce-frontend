@@ -1,12 +1,15 @@
+import { useEffect } from 'react';
 import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { UserContext } from '../context/UserContext'
 
 const Navbar = () => {
 
-  const { user, logoutContext } = useContext(UserContext);
-  console.log(user);
+  const { user, logoutContext, verifyToken } = useContext(UserContext);
 
+  useEffect(() => {
+    verifyToken()
+  }, [verifyToken])
 
   return (
     <header className="p-3 text-bg-dark">
@@ -20,7 +23,12 @@ const Navbar = () => {
               <li><NavLink to="/" className="nav-link px-2 text-white">¡Hola, {user.name}!</NavLink></li>
             ) : <></>}
             <li><NavLink to="/home" className="nav-link px-2 text-secondary">Home</NavLink></li>
-            <li><NavLink to="/profile" className="nav-link px-2 text-white">Profile</NavLink></li>
+            {
+              user ? (
+                <><li><NavLink to="/profile" className="nav-link px-2 text-white">Profile</NavLink></li>
+                </>
+              ) : <></>
+            }
             <li><NavLink to="/products" className="nav-link px-2 text-white">Products</NavLink></li>
             <li><a href="#" className="nav-link px-2 text-white">FAQs</a></li>
             <li><a href="#" className="nav-link px-2 text-white">About</a></li>
@@ -32,7 +40,7 @@ const Navbar = () => {
             {
               user ? (<>
                 <NavLink onClick={logoutContext} to={"/home"} type="button" className="btn btn-warning">Log-out</NavLink>
-              </>) : <>            <NavLink to={"/login"} type="button" className="btn btn-outline-light me-2">Login</NavLink>
+              </>) : <> <NavLink to={"/login"} type="button" className="btn btn-outline-light me-2">Login</NavLink>
                 <NavLink to={"/account"} type="button" className="btn btn-warning">Sign-up</NavLink>
               </>
             }
