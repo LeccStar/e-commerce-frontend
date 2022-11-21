@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { loginService } from '../../../services/userService'
 import LoadingButton from '../../LoadingButton/LoadingButton'
 import { UserContext } from '../../../context/UserContext'
-
+import robot from '../../../shared/robot.png'
 
 const Login = () => {
   const { loginContext } = useContext(UserContext)
@@ -51,7 +51,7 @@ const Login = () => {
   return (
     <main className="form-signin w-100 m-auto">
       <form onSubmit={loginUser}>
-        <img className="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="img" width={72} height={57} />
+        <img className="mb-4" src={robot} alt="img" width={72} height={57} />
         <h1 className="h3 mb-3 fw-normal">Ingresar</h1>
         <div className="form-floating">
           <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" value={formulario.email} name="email" onChange={handleInputChange} />

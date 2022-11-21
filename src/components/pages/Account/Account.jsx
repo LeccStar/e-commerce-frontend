@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import { UserContext } from '../../../context/UserContext'
 import { signupService } from '../../../services/userService'
 import LoadingButton from '../../LoadingButton/LoadingButton'
+import robot from '../../../shared/robot.png'
 import "./Account.css"
 
 const Account = () => {
@@ -54,7 +55,7 @@ const Account = () => {
   return (
     <main className="form-signin w-100 m-auto">
       <form onSubmit={createUser}>
-        <img className="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="img" width={72} height={57} />
+        <img className="mb-4" src={robot} alt="img" width={72} height={57} />
         <h1 className="h3 mb-3 fw-normal">Registrarse</h1>
         <div className="form-floating">
           <input type="text" className="form-control" id="floatingInput" placeholder="Name" value={formulario.name} name="name" onChange={handleInputChange} />
