@@ -17,7 +17,12 @@ const productReducer = (state = {}, action) => {
         case types.GET_PRODUCTS_TOTAL:
             return {
                 ...state,
-                products: action.payload
+                total: action.payload
+            }
+        case types.GET_PRODUCTS_CATEGORY:
+            return {
+                ...state,
+                productsCategory: action.payload
             }
         case types.ADD_PRODUCT_CAR:
             return {

@@ -8,6 +8,7 @@ import productReducer from "./ProductReducer"
 
 const initialState = {
   products: [],
+  productsCategory:[],
   total: 0,
   product: {},
   car: []
@@ -20,20 +21,9 @@ const ProductProvider = ({ children }) => {
     async () => {
       try {
         const resp = await getProductsService();
-        const products = resp.products.map((obj) => {
-          return {
-            uid: obj._id,
-            name: obj.name,
-            description: obj.description,
-            price: obj.price,
-            discount: obj.discount,
-            discount_percentaje: obj.discount_percentaje,
-            imgUrl: obj.imgUrl,
-          }
-        })
         dispatch({
           type: types.GET_PRODUCTS,
-          payload: products
+          payload: resp.products
         })
         dispatch({
           type: types.GET_PRODUCTS_TOTAL,
@@ -45,10 +35,26 @@ const ProductProvider = ({ children }) => {
     }, []
   )
 
+ const getProductsbyCategory = useCallback(
+    async (category) => {
+      try {
+        const resp = await getProductsService();
+        const products = resp.products.filter((product) => product.category.name===category)
+        dispatch({
+          type: types.GET_PRODUCTS_CATEGORY,
+          payload: products
+        })
+        
+      } catch (error) {
+        console.log(error);
+      }
+    },[]
+  )
+
   const getProduct = useCallback(
     async (uid) => {
       try {
-        const resp = getProductService(uid);
+        const resp = await getProductService(uid);
         const product = {
           uid: resp._id,
           name: resp.name,
@@ -60,7 +66,7 @@ const ProductProvider = ({ children }) => {
         }
         dispatch({
           type: types.GET_PRODUCT,
-          payload: product
+          payload: resp
         })
       } catch (error) {
         console.log(error);
@@ -111,9 +117,13 @@ const ProductProvider = ({ children }) => {
 
   return (
     <ProductContext.Provider value={{
+      product: productState.product,
       products: productState.products,
+      total: productState.total,
+      productsCategory: productState.productsCategory,
       getProduct,
       getProducts,
+      getProductsbyCategory,
       addProductCar,
       deleteProductCar,
       emptyCar

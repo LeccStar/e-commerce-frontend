@@ -1,0 +1,14 @@
+.productsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.positionBadge{
+    position: absolute;
+    top: 30px;
+}
+@media (min-width: 992px){
+    .column30 {
+        width: calc(33.33% - 1.5rem);
+    }
+}

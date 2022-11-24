@@ -1,0 +1,9 @@
+
+.homeContainer{
+    margin: 2rem 10rem 2rem 10rem;
+}
+
+.homeContainer img {
+    height: 28rem;
+    object-fit: cover;
+ }

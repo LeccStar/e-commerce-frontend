@@ -12,6 +12,7 @@ import Profile from '../components/pages/Profile/Profile'
 import PublicRoutes from './PublicRoutes'
 import Products from '../components/pages/Product/Products'
 import ProductProvider from '../context/ProductProvider'
+import Smartwatch from '../components/pages/Product/Smartwatch'
 
 const AppRouter = () => {
 
@@ -24,6 +25,7 @@ const AppRouter = () => {
         <Route path='home' element={<Home />} />
         <Route path='products/:id' element={<Product />} />
         <Route path='Categories' element={<Products />} />
+        <Route path='Categories/smartwatch' element={<Smartwatch/>} />
         <Route path='login' element={
           <PublicRoutes>
             <Login />

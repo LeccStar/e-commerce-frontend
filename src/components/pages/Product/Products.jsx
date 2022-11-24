@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 
 const Products = () => {
   return (
@@ -16,7 +18,7 @@ const Products = () => {
               <h5 className="card-title mb-3">Smartwatch</h5>
             </a>
             <a href className="text-reset">
-              <p>View products</p>
+              <Link to={"/categories/smartwatch"}>View products</Link>
             </a>
           </div>
         </div>
