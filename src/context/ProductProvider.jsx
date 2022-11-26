@@ -8,10 +8,10 @@ import productReducer from "./ProductReducer"
 
 const initialState = {
   products: [],
-  productsCategory:[],
+  productsCategory: [],
   total: 0,
   product: {},
-  car: []
+  cart: []
 }
 const ProductProvider = ({ children }) => {
 
@@ -35,20 +35,20 @@ const ProductProvider = ({ children }) => {
     }, []
   )
 
- const getProductsbyCategory = useCallback(
+  const getProductsbyCategory = useCallback(
     async (category) => {
       try {
         const resp = await getProductsService();
-        const products = resp.products.filter((product) => product.category.name===category)
+        const products = resp.products.filter((product) => product.category.name === category)
         dispatch({
           type: types.GET_PRODUCTS_CATEGORY,
           payload: products
         })
-        
+
       } catch (error) {
         console.log(error);
       }
-    },[]
+    }, []
   )
 
   const getProduct = useCallback(
@@ -74,44 +74,62 @@ const ProductProvider = ({ children }) => {
     }, []
   )
 
-  const addProductCar = useCallback(
-    async (uid) => {
+  const addProductCart =
+     (product) => {
       try {
-        const resp = getProductService(uid);
-        const product = {
-          uid: resp.data._id,
-          name: resp.data.name,
-          description: resp.data.description,
-          price: resp.data.price,
-          discount: resp.data.discount,
-          discount_percentaje: resp.data.discount_percentaje,
-          imgUrl: resp.data.imgUrl,
-        }
-        /*         const findProduct = productState.car.find((element)=>{
-                  return element.uid === product.uid
-                }) */
+        //const resp = await getProductService(uid);
+        /*         const findProduct = productState.cart.find((product) => {
+                  return product.uid === uid
+                })
+         */        //if (!findProduct) {
+        /*           console.log('producto añadido');    
+                }else{    
+                  console.log('producto ya se encuentra añadido en el carrito');    
+                } */
 
-        dispatch({
-          type: types.ADD_PRODUCT_CAR,
-          dispatch: product
+         dispatch({
+          type: types.ADD_PRODUCT_CART,
+          payload: product
         })
+
       } catch (error) {
         console.log(error);
       }
-    }, []
+      window.localStorage.setItem('CART', JSON.stringify(productState.cart))
+ 
+    }
+
+  const verifyCart = useCallback(() => {
+    const cart = JSON.parse(window.localStorage.getItem('CART'))
+    if (cart) {
+      window.localStorage.setItem('CART', JSON.stringify(cart))
+/*       cart.forEach(element => {
+        dispatch({
+          type: types.ADD_PRODUCT_CART,
+          payload: element
+        })
+
+      }); */
+      dispatch({
+        type: types.UPDATE_PRODUCT_CART,
+        payload: cart
+      })
+    }
+
+  },[]
   )
 
-  const deleteProductCar = (uid) => {
+  const deleteProductCart = (uid) => {
     dispatch({
-      type: types.DELETE_PRODUCT_CAR,
+      type: types.DELETE_PRODUCT_CART,
       payload: uid
     })
   }
 
-  const emptyCar = (car) => {
+  const emptyCart = (cart) => {
     dispatch({
-      type: types.EMPTY_CAR,
-      payload: car
+      type: types.EMPTY_CART,
+      payload: cart
     })
   }
 
@@ -121,12 +139,14 @@ const ProductProvider = ({ children }) => {
       products: productState.products,
       total: productState.total,
       productsCategory: productState.productsCategory,
+      cart: productState.cart,
       getProduct,
       getProducts,
       getProductsbyCategory,
-      addProductCar,
-      deleteProductCar,
-      emptyCar
+      addProductCart,
+      verifyCart,
+      deleteProductCart,
+      emptyCart
     }}>
       {children}
     </ProductContext.Provider>

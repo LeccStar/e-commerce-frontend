@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import Login from '../components/pages/Login/Login'
+import Login from '../components/pages/Account/Login'
 import { Product } from '../components/pages/Product/Product'
 import Home from '../components/pages/Home/Home'
 import NotFound from '../components/NotFound/NotFound'
@@ -16,23 +16,22 @@ import Smartwatch from '../components/pages/Product/Smartwatch'
 
 const AppRouter = () => {
 
-  <Navigate to={"/home"}/>
   return (
     <UserProvider>
       <ProductProvider>
       <Navbar />
       <Routes>
-        <Route path='home' element={<Home />} />
-        <Route path='products/:id' element={<Product />} />
-        <Route path='Categories' element={<Products />} />
-        <Route path='Categories/smartwatch' element={<Smartwatch/>} />
-        <Route path='login' element={
+        <Route path='/home' element={<Home />} />
+        <Route path='/products/:id' element={<Product />} />
+        <Route path='/categories' element={<Products />} />
+        <Route path='/categories/smartwatch' element={<Smartwatch/>} />
+        <Route path='/login' element={
           <PublicRoutes>
             <Login />
           </PublicRoutes>
         } />
-        <Route path='account' element={<Account />} />
-        <Route path='profile' element={
+        <Route path='/account' element={<Account />} />
+        <Route path='/profile' element={
           <PrivateRoute>
             <Profile />
           </PrivateRoute>

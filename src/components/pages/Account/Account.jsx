@@ -33,6 +33,7 @@ const Account = () => {
   }
 
   const createUser = async (e) => {
+    setIsLoading(true)
     e.preventDefault()
 
     try {
@@ -48,6 +49,7 @@ const Account = () => {
         `${error.response.data.errors[0].msg}`,
         "error"
       )
+      setIsLoading(false)
       console.log(error);
     }
   }

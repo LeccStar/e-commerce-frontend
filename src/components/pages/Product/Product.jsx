@@ -3,20 +3,28 @@ import { useEffect } from 'react'
 import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { ProductContext } from '../../../context/ProductContext'
+import { UserContext } from '../../../context/UserContext'
+import Cart from './Cart'
 
 
 export const Product = () => {
 
-  const { getProduct, product } = useContext(ProductContext)
+  const { getProduct, product, addProductCart, cart } = useContext(ProductContext)
   const { id } = useParams()
+
+  const handleAddProductCart = () => {
+    addProductCart(product);
+    console.log(cart);
+  };
 
   useEffect(() => {
     getProduct(id)
-  }, [getProduct])
+  }, [ getProduct])
+
 
   console.log(product);
   return (
-    <>
+    <div className='shopPage'>
       <div className="card" style={{ width: '18rem' }}>
         <img src={product.imgUrl} className="card-img-top" alt="..." />
         <div className="card-body">
@@ -34,9 +42,10 @@ export const Product = () => {
           </h6>
           ) : (<h6 className="mb-3">${product.price}</h6>
           )}
-          <a href="/" className="card-link">Añadir al carrito</a>
+          <button  onClick={handleAddProductCart} type="button" className="btn btn-warning">Añadir al carrito</button>
         </div>
       </div>
-    </>
+      <Cart/>
+    </div>
   )
 }

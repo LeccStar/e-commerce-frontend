@@ -1,7 +1,7 @@
 import React from 'react'
 import { types } from '../types/types'
 
-const productReducer = (state = {}, action) => {
+const productReducer = (state, action) => {
 
     switch (action.type) {
         case types.GET_PRODUCT:
@@ -24,20 +24,25 @@ const productReducer = (state = {}, action) => {
                 ...state,
                 productsCategory: action.payload
             }
-        case types.ADD_PRODUCT_CAR:
+        case types.ADD_PRODUCT_CART:
             return {
                 ...state,
-                car: [...state.car, action.payload]
+                cart: [...state.cart, action.payload]
             }
-        case types.DELETE_PRODUCT_CAR:
+        case types.UPDATE_PRODUCT_CART:
             return {
                 ...state,
-                car: state.car.filter((product) => product.id !== action.payload)
+                cart: action.payload
             }
-        case types.EMPTY_CAR:
+        case types.DELETE_PRODUCT_CART:
             return {
                 ...state,
-                car: []
+                cart: state.cart.filter((product) => product.id !== action.payload)
+            }
+        case types.EMPTY_CART:
+            return {
+                ...state,
+                cart: []
             }
 
         default:
