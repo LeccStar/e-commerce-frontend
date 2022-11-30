@@ -1,11 +1,14 @@
 import React from 'react'
 import { useContext } from 'react'
 import { ProductContext } from '../../../context/ProductContext'
+import { UserContext } from '../../../context/UserContext'
 
 const Cart = () => {
 
+  const {user}= useContext(UserContext) 
+
   const{cart} = useContext(ProductContext)
-  var cartCounter = {};
+  let cartCounter = {};
 
   cart.forEach(function(product) {
     if (!cartCounter.hasOwnProperty(product.name)) {
@@ -13,12 +16,10 @@ const Cart = () => {
     }
     cartCounter[product.name] += 1;
   });
-  console.log(cartCounter);
 
   let result = cart.filter((item, index)=>{
     return cart.findIndex((element)=> element.name ===item.name) === index 
   })
-  console.log(result);
 
   return (
 <section className="h-100" style={{backgroundColor: '#eee'}}>
@@ -35,28 +36,28 @@ const Cart = () => {
           return         <div className="card rounded-3 mb-4">
           <div className="card-body p-4">
             <div className="row d-flex justify-content-between align-items-center">
-              <div className="col-md-2 col-lg-2 col-xl-2">
+              <div className="col-md-2 col-lg-2 col-xl-2 colShopPage">
                 <img src={product.imgUrl} className="img-fluid rounded-3" alt="Cotton T-shirt" />
               </div>
-              <div className="col-md-3 col-lg-3 col-xl-3">
+              <div className="col-md-3 col-lg-3 col-xl-3 colShopPage">
                 <p className="lead fw-normal mb-2">{product.name}</p>
-                <p><span className="text-muted">Size: </span>M <span className="text-muted">Color: </span>Grey</p>
+                <p><span className="text-muted">Size: {cartCounter[product.name]} </span>M <span className="text-muted">Color: </span>Grey</p>
               </div>
-              <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
+              <div className="col-md-3 col-lg-3 col-xl-2 d-flex colShopPage">
                 <button className="btn btn-link px-2">
                   <i className="fas fa-minus" />
                 </button>
-                <input id="form1" min={1} name="quantity" defaultValue={cartCounter[product.name]} type="number" className="form-control form-control-sm" />
+                <input id="form1" min={1} name="quantity" value={cartCounter[product.name]} type="number" className="form-control form-control-sm" />
                 <button className="btn btn-link px-2">
                   <i className="fas fa-plus" />
                 </button>
               </div>
               {product.discount?
-              (<div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+              (<div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1 colShopPage">
               <h5 className="mb-0"><s>${product.price}</s>   ${product.price - ((product.discount_percentaje / 100) * product.price)}</h5>
             </div>)
             :
-            (<div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+            (<div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1 colShopPage">
             <h5 className="mb-0">${product.price}</h5>
           </div>)}
               <div className="col-md-1 col-lg-1 col-xl-1 text-end">

@@ -22,7 +22,7 @@ const Account = () => {
   });
 
   const navigate = useNavigate()
-  
+
   const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (e) => {
@@ -35,22 +35,29 @@ const Account = () => {
   const createUser = async (e) => {
     setIsLoading(true)
     e.preventDefault()
+    console.log(e.target.verifyPassword.value);
 
-    try {
-      const resp = await signupService(formulario)
-      console.log(resp);
-      loginContext(resp);
-      navigate("/home")
+    if (e.target.verifyPassword.value===formulario.password) {
+      try {
+        const resp = await signupService(formulario)
+        loginContext(resp);
+        navigate("/home")
 
-
-    } catch (error) {
-      Swal.fire(
-        "Mensaje",
-        `${error.response.data.errors[0].msg}`,
-        "error"
-      )
-      setIsLoading(false)
-      console.log(error);
+      } catch (error) {
+        Swal.fire(
+          "Mensaje",
+          `${error.response.data.errors[0].msg}`,
+          "error"
+        )
+        setIsLoading(false)
+        console.log(error);
+      }
+    } else {Swal.fire(
+      "Mensaje",
+      `Password do not match`,
+      "error"
+    )
+    setIsLoading(false)
     }
   }
 
@@ -58,29 +65,29 @@ const Account = () => {
     <main className="form-signin w-100 m-auto">
       <form onSubmit={createUser}>
         <img className="mb-4" src={robot} alt="img" width={72} height={57} />
-        <h1 className="h3 mb-3 fw-normal">Registrarse</h1>
+        <h1 className="h3 mb-3 fw-normal">Sign Up</h1>
         <div className="form-floating">
           <input type="text" className="form-control" id="floatingInput" placeholder="Name" value={formulario.name} name="name" onChange={handleInputChange} />
-          <label htmlFor="floatingInput">Nombre</label>
+          <label htmlFor="floatingInput">Name</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" id="floatingInput" placeholder="Last Name" value={formulario.lastName} name="lastName" onChange={handleInputChange} />
-          <label htmlFor="floatingInput">Apellido</label>
+          <input type="text" className="form-control" placeholder="Last Name" value={formulario.lastName} name="lastName" onChange={handleInputChange} />
+          <label htmlFor="floatingInput">Last Name</label>
         </div>
         <div className="form-floating">
-          <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" value={formulario.email} name="email" onChange={handleInputChange} />
-          <label htmlFor="floatingInput">Correo</label>
+          <input type="email" className="form-control" placeholder="name@example.com" value={formulario.email} name="email" onChange={handleInputChange} />
+          <label htmlFor="floatingInput">Email</label>
         </div>
         <div className="form-floating">
           <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={formulario.password} name="password" onChange={handleInputChange} />
-          <label htmlFor="floatingPassword">Contraseña</label>
+          <label htmlFor="floatingPassword">Pasword</label>
         </div>
-        <div className="checkbox mb-3">
-          <label>
-            <input type="checkbox" defaultValue="remember-me" /> Remember me
-          </label>
+        <div className="form-floating">
+          <input type="password" className="form-control" placeholder="Password" name='verifyPassword'/>
+          <label htmlFor="floatingPassword">Repeat Passwrord</label>
         </div>
-        <LoadingButton isLoading={isLoading} text='Continuar' className="w-100 btn btn-lg btn-primary" type="submit"/>
+        <br/>
+        <LoadingButton isLoading={isLoading} text='Continue' className="w-100 btn btn-lg btn-primary" type="submit" />
         <p className="mt-5 mb-3 text-muted">© 2017–2022</p>
       </form>
     </main>

@@ -22,12 +22,17 @@
     .column30 {
         width: calc(33.33% - 1.5rem);
     }
-
+    .shopPage .card .row{
+        flex-direction: column;
+    }
     .shopPage {
         display: grid;
         grid-template-columns: 60% auto;
         padding: 2rem;
         justify-items: center;
         align-items: flex-start;
+    }
+    .shopPage .colShopPage {
+        width: 100%;
     }
 }

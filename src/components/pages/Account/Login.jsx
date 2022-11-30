@@ -52,21 +52,17 @@ const Login = () => {
     <main className="form-signin w-100 m-auto">
       <form onSubmit={loginUser}>
         <img className="mb-4" src={robot} alt="img" width={72} height={57} />
-        <h1 className="h3 mb-3 fw-normal">Ingresar</h1>
+        <h1 className="h3 mb-3 fw-normal">Login</h1>
         <div className="form-floating">
           <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" value={formulario.email} name="email" onChange={handleInputChange} />
-          <label htmlFor="floatingInput">Correo</label>
+          <label htmlFor="floatingInput">Email</label>
         </div>
         <div className="form-floating">
           <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={formulario.password} name="password" onChange={handleInputChange} />
-          <label htmlFor="floatingPassword">Contraseña</label>
+          <label htmlFor="floatingPassword">Password</label>
         </div>
-        <div className="checkbox mb-3">
-          <label>
-            <input type="checkbox" defaultValue="remember-me" /> Remember me
-          </label>
-        </div>
-        <LoadingButton isLoading={isLoading} text='Continuar' className="w-100 btn btn-lg btn-primary" type="submit"/>
+        <br/>
+        <LoadingButton isLoading={isLoading} text='Continue' className="btn btn-outline-light me-2" type="submit"/>
         <p className="mt-5 mb-3 text-muted">© 2017–2022</p>
       </form>
     </main>
