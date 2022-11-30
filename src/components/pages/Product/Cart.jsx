@@ -5,6 +5,20 @@ import { ProductContext } from '../../../context/ProductContext'
 const Cart = () => {
 
   const{cart} = useContext(ProductContext)
+  var cartCounter = {};
+
+  cart.forEach(function(product) {
+    if (!cartCounter.hasOwnProperty(product.name)) {
+      cartCounter[product.name] = 0
+    }
+    cartCounter[product.name] += 1;
+  });
+  console.log(cartCounter);
+
+  let result = cart.filter((item, index)=>{
+    return cart.findIndex((element)=> element.name ===item.name) === index 
+  })
+  console.log(result);
 
   return (
 <section className="h-100" style={{backgroundColor: '#eee'}}>
@@ -17,7 +31,7 @@ const Cart = () => {
             <p className="mb-0"><span className="text-muted">Sort by:</span> <a href="#!" className="text-body">price <i className="fas fa-angle-down mt-1" /></a></p>
           </div>
         </div>
-        {cart.map((product)=>{
+        {result.map((product)=>{
           return         <div className="card rounded-3 mb-4">
           <div className="card-body p-4">
             <div className="row d-flex justify-content-between align-items-center">
@@ -32,7 +46,7 @@ const Cart = () => {
                 <button className="btn btn-link px-2">
                   <i className="fas fa-minus" />
                 </button>
-                <input id="form1" min={0} name="quantity" defaultValue={2} type="number" className="form-control form-control-sm" />
+                <input id="form1" min={1} name="quantity" defaultValue={cartCounter[product.name]} type="number" className="form-control form-control-sm" />
                 <button className="btn btn-link px-2">
                   <i className="fas fa-plus" />
                 </button>

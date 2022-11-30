@@ -26,7 +26,7 @@ export const Product = () => {
   return (
     <div className='shopPage'>
       <div className="card" style={{ width: '18rem' }}>
-        <img src={product.imgUrl} className="card-img-top" alt="..." />
+        <img src={product.imgUrl} className="card-img-top" alt={product.name} />
         <div className="card-body">
           <h5 className="card-title">{product.name}</h5>
           <p className="card-text">{product.description}</p>
@@ -42,7 +42,11 @@ export const Product = () => {
           </h6>
           ) : (<h6 className="mb-3">${product.price}</h6>
           )}
-          <button  onClick={handleAddProductCart} type="button" className="btn btn-warning">Añadir al carrito</button>
+          <button  onClick={()=>{
+            handleAddProductCart()
+            window.localStorage.setItem('CART', JSON.stringify(cart))
+            
+          }} type="button" className="btn btn-warning">Añadir al carrito</button>
         </div>
       </div>
       <Cart/>

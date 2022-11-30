@@ -3,17 +3,31 @@
     flex-wrap: wrap;
     gap: 2rem;
 }
-.positionBadge{
+
+.positionBadge {
     position: absolute;
     top: 30px;
 }
-.shopPage{
+
+.shopPage {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-top: 1rem;
 }
-@media (min-width: 992px){
+
+
+
+@media (min-width: 992px) {
     .column30 {
         width: calc(33.33% - 1.5rem);
+    }
+
+    .shopPage {
+        display: grid;
+        grid-template-columns: 60% auto;
+        padding: 2rem;
+        justify-items: center;
+        align-items: flex-start;
     }
 }
