@@ -37,12 +37,12 @@ const productReducer = (state, action) => {
         case types.DELETE_PRODUCT_CART:
             return {
                 ...state,
-                cart: state.cart.filter((product) => product.id !== action.payload)
+                cart: state.cart.filter((product) => product._id !== action.payload)
             }
         case types.EMPTY_CART:
             return {
                 ...state,
-                cart: []
+                cart: action.payload
             }
 
         default:

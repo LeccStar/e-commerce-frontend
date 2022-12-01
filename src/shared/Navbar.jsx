@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { ProductContext } from '../context/ProductContext';
 import { UserContext } from '../context/UserContext'
 import robot from "./robot.png"
@@ -8,10 +8,11 @@ import robot from "./robot.png"
 const Navbar = () => {
 
   const { user, logoutContext, verifyToken } = useContext(UserContext);
-  const {verifyCart} = useContext(ProductContext)
+  const {verifyCart, emptyCart} = useContext(ProductContext)
 
   useEffect(() => {
     verifyToken()
+    emptyCart()
   }, [verifyToken])
 
   useEffect(() => {
@@ -22,9 +23,9 @@ const Navbar = () => {
     <header className="p-3 text-bg-dark">
       <div className="container">
         <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <Link to="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
             <img src={robot} className="bi me-2" width={40} height={32} aria-label="Bootstrap"></img>
-          </a>
+          </Link>
           <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             {user ? (
               <li><NavLink to="/" className="nav-link px-2 text-white">¡Hola, {user.name}!</NavLink></li>
@@ -37,8 +38,8 @@ const Navbar = () => {
               ) : <></>
             }
             <li><NavLink to="/categories" className="nav-link px-2 text-white">Products</NavLink></li>
-            <li><a href="#" className="nav-link px-2 text-white">FAQs</a></li>
-            <li><a href="#" className="nav-link px-2 text-white">About</a></li>
+            <li><NavLink to="/" className="nav-link px-2 text-white">FAQs</NavLink></li>
+            <li><NavLink to="/" className="nav-link px-2 text-white">About</NavLink></li>
           </ul>
           <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
             <input type="search" className="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search" />

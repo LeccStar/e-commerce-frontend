@@ -2,12 +2,21 @@ import React from 'react'
 import { useContext } from 'react'
 import { ProductContext } from '../../../context/ProductContext'
 import { UserContext } from '../../../context/UserContext'
+import { BsFillFileMinusFill, BsFillFilePlusFill } from "react-icons/bs";
+import { AiFillDelete } from "react-icons/ai";
+import { useEffect } from 'react';
+
 
 const Cart = () => {
 
   const {user}= useContext(UserContext) 
 
-  const{cart} = useContext(ProductContext)
+  const{cart,addProductCart, deleteProductCart, deleteOneProductCart, emptyCart} = useContext(ProductContext)
+
+  useEffect(()=>{
+    emptyCart()
+  },[])
+
   let cartCounter = {};
 
   cart.forEach(function(product) {
@@ -20,6 +29,20 @@ const Cart = () => {
   let result = cart.filter((item, index)=>{
     return cart.findIndex((element)=> element.name ===item.name) === index 
   })
+
+  const handleAddProductCart = (product) => {
+    addProductCart(product);
+  };
+
+  const handdleDeleteProductCart = (id)=> {
+    deleteProductCart(id)
+    console.log(cart);
+  }
+
+  const handleDeleteOneProductCart = (product)=>{
+    deleteOneProductCart(product)
+  }
+  console.log(result);
 
   return (
 <section className="h-100" style={{backgroundColor: '#eee'}}>
@@ -44,12 +67,15 @@ const Cart = () => {
                 <p><span className="text-muted">Size: {cartCounter[product.name]} </span>M <span className="text-muted">Color: </span>Grey</p>
               </div>
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex colShopPage">
-                <button className="btn btn-link px-2">
-                  <i className="fas fa-minus" />
+                <button onClick={()=>{handleDeleteOneProductCart(product)}} className="btn btn-link">
+                <i className="fas fa-minus"><BsFillFileMinusFill/></i>
                 </button>
                 <input id="form1" min={1} name="quantity" value={cartCounter[product.name]} type="number" className="form-control form-control-sm" />
-                <button className="btn btn-link px-2">
-                  <i className="fas fa-plus" />
+                <button onClick={()=>{handleAddProductCart(product)}} className="btn btn-link px-2">
+                  <i className="fas fa-plus"><BsFillFilePlusFill/></i>
+                </button>
+                <button onClick={()=>{handdleDeleteProductCart(product._id)}} className="btn px-3">
+                  <AiFillDelete/>
                 </button>
               </div>
               {product.discount?

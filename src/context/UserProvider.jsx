@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
 import { verifyTokenService } from '../services/userService'
-//import { types } from '../../types/types'
 import { UserContext } from './UserContext'
 
 
@@ -12,6 +11,7 @@ const initialState = {
 const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState(null)
+
 
   const loginContext = (data) => {
     //window.localStorage.setItem(MY_AUTH_APP, user.token)

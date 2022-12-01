@@ -1,9 +1,10 @@
-import { useCallback, useReducer } from "react"
+import { useCallback, useContext, useReducer } from "react"
 import { getProductsService } from "../services/productService";
 import { getProductService } from "../services/productService";
 import { types } from "../types/types";
 import { ProductContext } from "./ProductContext";
 import productReducer from "./ProductReducer"
+import { UserContext } from "./UserContext";
 
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
 const ProductProvider = ({ children }) => {
 
   const [productState, dispatch] = useReducer(productReducer, initialState);
+  const {user }=useContext(UserContext)
 
   const getProducts = useCallback(
     async () => {
@@ -75,7 +77,7 @@ const ProductProvider = ({ children }) => {
   )
 
   const addProductCart =
-     (product) => {
+    (product) => {
       try {
         //const resp = await getProductService(uid);
         /*         const findProduct = productState.cart.find((product) => {
@@ -87,7 +89,7 @@ const ProductProvider = ({ children }) => {
                   console.log('producto ya se encuentra añadido en el carrito');    
                 } */
 
-         dispatch({
+        dispatch({
           type: types.ADD_PRODUCT_CART,
           payload: product
         })
@@ -96,27 +98,27 @@ const ProductProvider = ({ children }) => {
         console.log(error);
       }
       window.localStorage.setItem('CART', JSON.stringify(productState.cart))
- 
+
     }
 
   const verifyCart = useCallback(() => {
     const cart = JSON.parse(window.localStorage.getItem('CART'))
     if (cart) {
       window.localStorage.setItem('CART', JSON.stringify(cart))
-/*       cart.forEach(element => {
-        dispatch({
-          type: types.ADD_PRODUCT_CART,
-          payload: element
-        })
-
-      }); */
+      /*       cart.forEach(element => {
+              dispatch({
+                type: types.ADD_PRODUCT_CART,
+                payload: element
+              })
+      
+            }); */
       dispatch({
         type: types.UPDATE_PRODUCT_CART,
         payload: cart
       })
     }
 
-  },[]
+  }, []
   )
 
   const deleteProductCart = (uid) => {
@@ -124,15 +126,31 @@ const ProductProvider = ({ children }) => {
       type: types.DELETE_PRODUCT_CART,
       payload: uid
     })
+    window.localStorage.setItem('CART', JSON.stringify(productState.cart))
   }
 
-  const emptyCart = (cart) => {
+  const deleteOneProductCart = (product) => {
+    const index = productState.cart.findIndex((element)=> element.name===product.name)
+    productState.cart.splice(index,1)
     dispatch({
-      type: types.EMPTY_CART,
-      payload: cart
+      type: types.UPDATE_PRODUCT_CART,
+      payload: productState.cart
     })
+    window.localStorage.setItem('CART', JSON.stringify(productState.cart))
+
   }
 
+  const emptyCart = useCallback(() => {
+    const token = window.localStorage.getItem(process.env.REACT_APP_LOCALSTORAGE);
+      if (!token) {
+        dispatch({
+          type: types.EMPTY_CART,
+          payload: []
+        })
+        window.localStorage.setItem('CART', JSON.stringify(productState.cart))
+  
+      }      
+  },[])
   return (
     <ProductContext.Provider value={{
       product: productState.product,
@@ -146,6 +164,7 @@ const ProductProvider = ({ children }) => {
       addProductCart,
       verifyCart,
       deleteProductCart,
+      deleteOneProductCart,
       emptyCart
     }}>
       {children}
