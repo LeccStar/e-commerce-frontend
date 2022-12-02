@@ -56,7 +56,7 @@ const Cart = () => {
           </div>
         </div>
         {result.map((product)=>{
-          return         <div className="card rounded-3 mb-4">
+          return         <div className="card rounded-3 mb-4" key={product.name}>
           <div className="card-body p-4">
             <div className="row d-flex justify-content-between align-items-center">
               <div className="col-md-2 col-lg-2 col-xl-2 colShopPage">
@@ -70,7 +70,7 @@ const Cart = () => {
                 <button onClick={()=>{handleDeleteOneProductCart(product)}} className="btn btn-link">
                 <i className="fas fa-minus"><BsFillFileMinusFill/></i>
                 </button>
-                <input id="form1" min={1} name="quantity" value={cartCounter[product.name]} type="number" className="form-control form-control-sm" />
+                <input id="form1" min={1} name="quantity" value={cartCounter[product.name]} readOnly type="number" className="form-control form-control-sm" />
                 <button onClick={()=>{handleAddProductCart(product)}} className="btn btn-link px-2">
                   <i className="fas fa-plus"><BsFillFilePlusFill/></i>
                 </button>

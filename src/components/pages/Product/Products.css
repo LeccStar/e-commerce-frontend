@@ -20,13 +20,12 @@
 }
 
 
-
-
-
 @media (min-width: 992px) {
     .column30 {
         width: calc(33.33% - 1.5rem);
+        display: flex;
     }
+
     .shopPage .card .row{
         flex-direction: column;
     }
