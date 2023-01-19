@@ -17,7 +17,7 @@ const Products = () => {
             <Link to="/categories/smartwatch" className="text-reset">
               <h5 className="card-title mb-3">Smartwatch</h5>
             </Link>
-              <Link className="text-reset" to="/categories/smartwatch">View products</Link>
+              <Link className="text-reset" to="/categories/smartwatch"><p>View products</p></Link>
           </div>
         </div>
       </div>
@@ -30,9 +30,7 @@ const Products = () => {
             <Link className="text-reset">
               <h5 className="card-title mb-3">Smart Speakers</h5>
             </Link>
-            <Link className="text-reset">
-              <p>View products</p>
-            </Link>
+            <Link className="text-reset" to="/categories/smartspeakers"><p>View products</p></Link>
           </div>
         </div>
       </div>

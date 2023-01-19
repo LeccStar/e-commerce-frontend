@@ -31,6 +31,7 @@ const ProductProvider = ({ children }) => {
           type: types.GET_PRODUCTS_TOTAL,
           payload: resp.total
         })
+        console.log(resp);
       } catch (error) {
         console.log(error);
       }
